@@ -1,4 +1,4 @@
-source "azure-arm" "devbox" {
+source "azure-arm" "build" {
   client_id       = var.client_id
   client_secret   = var.client_secret
   tenant_id       = var.tenant_id
@@ -8,17 +8,23 @@ source "azure-arm" "devbox" {
 build {
   name = "devbox"
 
-  source "source.azure-arm.devbox" {
-    managed_image_name                = "${var.image_name_prefix}-${formatdate("YYYYMMDDhhmmss",timestamp())}"
-    managed_image_resource_group_name = var.resource_group_name
+  source "source.azure-arm.build" {
+    location = var.location
+    vm_size  = "Standard_D4_v5"
 
     os_type         = "Windows"
     image_publisher = "MicrosoftVisualStudio"
-    image_offer     = "visualstudio2022"
+    image_offer     = "visualstudioplustools"
     image_sku       = "vs-2022-ent-general-win11-m365-gen2"
 
-    location = var.location
-    vm_size  = "Standard_D2_v2"
+    managed_image_name                 = "${var.image_name_prefix}-${formatdate("YYYYMMDDhhmmss",timestamp())}"
+    managed_image_resource_group_name  = var.resource_group_name
+
+    communicator   = "winrm"
+    winrm_use_ssl  = true
+    winrm_insecure = true
+    winrm_timeout  = "3m"
+    winrm_username = "packer"
   }
 
   # Install the Chocolatey package manager
