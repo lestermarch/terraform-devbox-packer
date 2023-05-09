@@ -1,4 +1,4 @@
-source "azure" "arm" {
+source "azure-arm" "devbox" {
   client_id       = var.client_id
   client_secret   = var.client_secret
   tenant_id       = var.tenant_id
@@ -8,7 +8,7 @@ source "azure" "arm" {
 build {
   name = "devbox"
 
-  source "source.azure.arm" {
+  source "source.azure-arm.devbox" {
     managed_image_name                = var.resource_group_name
     managed_image_resource_group_name = "${var.image_prefix}-${formatdate("YYYYMMDDhhmmss",timestamp())}"
 
