@@ -10,7 +10,7 @@ build {
 
   source "source.azure-arm.devbox" {
     managed_image_name                = var.resource_group_name
-    managed_image_resource_group_name = "${var.image_prefix}-${formatdate("YYYYMMDDhhmmss",timestamp())}"
+    managed_image_resource_group_name = "${var.image_name_prefix}-${formatdate("YYYYMMDDhhmmss",timestamp())}"
 
     os_type         = "Windows"
     image_publisher = "MicrosoftVisualStudio"
